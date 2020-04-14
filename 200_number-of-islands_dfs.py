@@ -10,15 +10,17 @@
 class Solution:
        def numIslands(self, grid) :
         """
-        递归写法
+        首先理解题意，相连的一片1为一个岛
         """
-        if len(grid)==0: #注意判断特殊条件
+        if len(grid)==0:#注意判断特殊条件
             return 0
-
+            
         count = 0
         R,C = len(grid),len(grid[0])
 
+
         def neighbour(r,c):
+            "获取邻接元素，也可以用方向矩阵代替"
             for nr, nc in ((r-1,c),(r,c-1),(r+1,c),(r,c+1)):
                 if 0 <= nr < R and 0 <= nc < C:
                     yield nr, nc
@@ -37,6 +39,7 @@ class Solution:
                     
         
         return count
+
 ss = Solution()
 res = ss.numIslands([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]])
 print(res)
