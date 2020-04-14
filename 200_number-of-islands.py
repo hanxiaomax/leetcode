@@ -5,28 +5,41 @@
 #
 # https://leetcode-cn.com/problems/number-of-islands/description/
 #
-
+# 首先理解题意，相连的一片1为一个岛
 # @lc code=start
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        if not grid: return 0
-        
+       def numIslands(self, grid) :
+        """
+        递归写法
+        """
+        if len(grid)==0: #注意判断特殊条件
+            return 0
+
         count = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j] == '1':
-                    self.dfs(grid, i, j)
-                    count += 1
+        R,C = len(grid),len(grid[0])
+
+        def neighbour(r,c):
+            for nr, nc in ((r-1,c),(r,c-1),(r+1,c),(r,c+1)):
+                if 0 <= nr < R and 0 <= nc < C:
+                    yield nr, nc
+
+        def dfs(r,c):
+            grid[r][c] = '0' # 类似于记录已经遍历过的元素（将连成一片的岛屿击沉）
+            for nr,nc in neighbour(r,c):
+                if grid[nr][nc] == '1':
+                    dfs(nr,nc)
+        
+        for r,rows in enumerate(grid):
+            for c, value in enumerate(rows):
+                if value == "1":
+                    count+=1
+                    dfs(r,c)
                     
+        
         return count
-    
-    def dfs(self, grid, i, j):
-        if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1':
-            return 
-        grid[i][j] = '0'
-        self.dfs(grid, i + 1, j)
-        self.dfs(grid, i - 1, j)
-        self.dfs(grid, i, j + 1)
-        self.dfs(grid, i, j - 1)
+ss = Solution()
+res = ss.numIslands([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]])
+print(res)
 # @lc code=end
+
 
