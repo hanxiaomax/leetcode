@@ -32,7 +32,6 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
-
 class Solution:
     def isPalindrome(self, head: ListNode) -> bool:
         def reverseList(head):
@@ -48,20 +47,26 @@ class Solution:
 
             return pre
 
-        slow = head
-        fast = head
+        slow,fast = head,head
         # 双指针找到中间节点
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-        
-        re = reverseList(slow)#反转后半段链表
 
-        while head and re:
-            if head.val != re.val:
+
+        re = reverseList(slow)#反转后半段链表
+        
+        start,end = head,re
+
+        while start and end:
+            if start.val != end.val:
                 return False
-            head = head.next
-            re = re.next
+            start = start.next
+            end = end.next
+
+        reverseList(re)#恢复后半段链表，注意前面不能改变re
+        #print(head) # 可以直接打印链表
+
         return True
 # @lc code=end
 
