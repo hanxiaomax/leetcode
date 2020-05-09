@@ -61,7 +61,7 @@ class BSTIterator:
         self.stack = []
         self._in_order(root)
 
-    def next(self) -> int:
+    def next(self) :
         """
         @return the next smallest number
         每次调用next，出队一个子左节点并返回值。同时访问其右子节点并将它的左子节点全部入队列
@@ -71,12 +71,12 @@ class BSTIterator:
             self._in_order(p.right)
         return p.val
 
-    def hasNext(self) -> bool:
+    def hasNext(self) :
         """
         @return whether we have a next smallest number
         """
         return len(self.stack)>0
-    
+
     def _in_order(self,root):
         #左子节点全部入队列
         while root:
